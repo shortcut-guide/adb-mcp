@@ -694,42 +694,63 @@ const getLayers = async (command) => {
             for (let i = 0; i < layersList.length; i++) {
                 let layer = layersList[i];
 
-                let kind = layer.kind.toUpperCase()
+                try {
+                    let kind = layer.kind.toUpperCase()
 
-                let layerInfo = {
-                    name: layer.name,
-                    type: kind,
-                    id: layer.id,
-                    isClippingMask: layer.isClippingMask,
-                    opacity: Math.round(layer.opacity),
-                    blendMode: layer.blendMode.toUpperCase(),
-                };
+                    let layerInfo = {
+                        name: layer.name,
+                        type: kind,
+                        id: layer.id,
+                        isClippingMask: layer.isClippingMask,
+                        opacity: Math.round(layer.opacity),
+                        blendMode: layer.blendMode.toUpperCase(),
+                    };
 
-                if (kind == constants.LayerKind.TEXT.toUpperCase()) {
+                    if (kind == constants.LayerKind.TEXT.toUpperCase()) {
+                        try {
+                            let _c = layer.textItem.characterStyle.color;
+                            let color = {
+                                red: Math.round(_c.rgb.red),
+                                green: Math.round(_c.rgb.green),
+                                blue: Math.round(_c.rgb.blue)
+                            }
 
-                    let _c = layer.textItem.characterStyle.color;
-                    let color = {
-                        red: Math.round(_c.rgb.red),
-                        green: Math.round(_c.rgb.green),
-                        blue: Math.round(_c.rgb.blue)
+                            layerInfo.textInfo = {
+                                fontSize: convertFromPhotoshopFontSize(layer.textItem.characterStyle.size),
+                                fontName: layer.textItem.characterStyle.font,
+                                fontColor: color,
+                                text: layer.textItem.contents,
+                                isMultiLineText: layer.textItem.isParagraphText
+                            }
+                        } catch (e) {
+                            // Some document/working-space combinations can throw DOM color precision errors.
+                            // Return text metadata without fontColor rather than failing the entire command.
+                            layerInfo.textInfo = {
+                                fontSize: convertFromPhotoshopFontSize(layer.textItem.characterStyle.size),
+                                fontName: layer.textItem.characterStyle.font,
+                                text: layer.textItem.contents,
+                                isMultiLineText: layer.textItem.isParagraphText,
+                                colorReadError: `${e}`
+                            }
+                        }
                     }
 
-                    layerInfo.textInfo = {
-                        fontSize: convertFromPhotoshopFontSize(layer.textItem.characterStyle.size),
-                        fontName: layer.textItem.characterStyle.font,
-                        fontColor: color,
-                        text: layer.textItem.contents,
-                        isMultiLineText: layer.textItem.isParagraphText
+
+                    // Check if this layer has sublayers (is a group)
+                    if (layer.layers && layer.layers.length > 0) {
+                        layerInfo.layers = processLayers(layer.layers);
                     }
+
+                    layersArray.push(layerInfo);
+                } catch (e) {
+                    // Never fail the full layer traversal due to a single problematic layer.
+                    layersArray.push({
+                        id: layer?.id,
+                        name: layer?.name || `Layer-${i}`,
+                        type: "UNKNOWN",
+                        layerReadError: `${e}`,
+                    });
                 }
-
-
-                // Check if this layer has sublayers (is a group)
-                if (layer.layers && layer.layers.length > 0) {
-                    layerInfo.layers = processLayers(layer.layers);
-                }
-
-                layersArray.push(layerInfo);
             }
 
             return layersArray;

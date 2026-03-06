@@ -60,27 +60,27 @@ Navigate to the project directory and run:
 
 #### Photoshop
 ```bash
-uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with numpy ps-mcp.py
+uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with numpy mcp/ps-mcp.py
 ```
 
 #### Premiere Pro
 ```bash
-uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with pillow pr-mcp.py
+uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with pillow mcp/pr-mcp.py
 ```
 
 #### InDesign
 ```bash
-uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with pillow id-mcp.py
+uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with pillow mcp/id-mcp.py
 ```
 
 #### AfterEffects
 ```bash
-uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with pillow ae-mcp.py
+uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with pillow mcp/ae-mcp.py
 ```
 
 #### Illustrator
 ```bash
-uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with pillow ai-mcp.py
+uv run mcp install --with fonttools --with python-socketio --with mcp --with requests --with websocket-client --with pillow mcp/ai-mcp.py
 ```
 
 Restart Claude Desktop after installation.
