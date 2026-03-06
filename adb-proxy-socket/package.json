@@ -5,7 +5,7 @@
   "main": "proxy.js",
   "bin": "proxy.js",
   "scripts": {
-    "build": "pkg ."
+    "build": "pkg . --no-bytecode"
   },
   "author": "Mike Chambers",
   "license": "ISC",

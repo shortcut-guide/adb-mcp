@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "adobe-photoshop": {
+      "command": "C:/Users/user/Dropbox/PC/Documents/dev/adb-mcp/mcp/.venv/Scripts/python.exe",
+      "args": [
+        "C:/Users/user/Dropbox/PC/Documents/dev/adb-mcp/mcp/ps-mcp.py"
+      ]
+    }
+  }
+}

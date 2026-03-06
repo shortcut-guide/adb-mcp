@@ -36,7 +36,7 @@ const { io } = require("./socket.io.js");
 const app = require("photoshop").app;
 
 const APPLICATION = "photoshop";
-const PROXY_URL = "http://localhost:3001";
+const PROXY_URL = "http://127.0.0.1:3001";
 
 let socket = null;
 
@@ -74,7 +74,12 @@ const onCommandPacket = async (packet) => {
 function connectToServer() {
     // Create new Socket.IO connection
     socket = io(PROXY_URL, {
-        transports: ["websocket"],
+        transports: ["websocket", "polling"],
+        reconnection: true,
+        reconnectionAttempts: Infinity,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        timeout: 10000,
     });
 
     socket.on("connect", () => {
