@@ -1,0 +1,230 @@
+:root {
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --secondary-color: #6c757d;
+    --secondary-hover: #5a6268;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --border-color: #dee2e6;
+    --success-color: #28a745;
+    --error-color: #dc3545;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+header {
+    background-color: #212529;
+    color: #fff;
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1, h2 {
+    margin: 0;
+}
+
+#status-indicator {
+    font-size: 0.9em;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background-color: var(--secondary-color);
+}
+
+.status-connected {
+    background-color: var(--success-color) !important;
+}
+
+.status-disconnected {
+    background-color: var(--error-color) !important;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+button.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+button.primary:hover {
+    background-color: var(--primary-hover);
+}
+
+button.secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+button.secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+.hidden {
+    display: none;
+}
+
+#parse-status {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.form-field {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.form-field:last-child {
+    border-bottom: none;
+}
+
+.form-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-field .field-meta {
+    font-size: 12px;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+}
+
+/* Image Field */
+.image-field {
+    border: 2px dashed var(--border-color);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #fafafa;
+}
+
+.image-preview {
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+/* List Field (Array) */
+.list-field {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 15px;
+    background-color: #fcfcfc;
+}
+
+.list-items {
+    margin-top: 15px;
+}
+
+.list-item {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.btn-remove-item {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--error-color);
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.btn-add-item {
+    background-color: #e2e3e5;
+    color: #383d41;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.form-field.has-error {
+    border-color: var(--error-color);
+}
+
+.form-field.has-error label {
+    color: var(--error-color);
+}
+
+.form-field.has-error input {
+    border-color: var(--error-color);
+}
+
+.error-msg {
+    color: var(--error-color);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border-color);
+}
+
+footer {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--secondary-color);
+    font-size: 0.9em;
+}

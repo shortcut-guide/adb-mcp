@@ -1,0 +1,192 @@
+openapi: 3.1.0
+info:
+  title: PSD Component Management System API
+  version: 1.0.0
+  description: API for analyzing PSD components and reflecting edits back via MCP.
+
+paths:
+  /api/components/parse:
+    post:
+      summary: Analyze a PSD and return identified components
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                psdPath:
+                  type: string
+                  description: Absolute path to the PSD file
+              required:
+                - psdPath
+      responses:
+        '200':
+          description: PSD analyzed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResult'
+        '400':
+          description: Invalid request or PSD not found
+
+  /api/components/{id}/form-schema:
+    get:
+      summary: Generate a form schema for a previously analyzed component
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Form schema generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormSchema'
+        '404':
+          description: Component not found
+
+  /api/components/{id}/preview-apply:
+    post:
+      summary: Apply changes to PSD for preview (non-permanent)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Changes applied for preview
+        '400':
+          description: Validation error
+
+  /api/components/{id}/apply:
+    post:
+      summary: Permanently apply changes to PSD
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Changes applied successfully
+        '500':
+          description: MCP error or apply failed
+
+  /api/components/{id}/diff:
+    post:
+      summary: Get diff between current PSD state and proposed values
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Diff calculated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  changedLayers:
+                    type: array
+                    items:
+                      type: string
+
+components:
+  schemas:
+    AnalysisResult:
+      type: object
+      properties:
+        componentId:
+          type: string
+        layers:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LayerInfo'
+    
+    LayerInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [TEXT, IMAGE, LIST, OTHER]
+        path:
+          type: string
+        layer_id:
+          type: integer
+        original_value:
+          type: string
+          nullable: true
+        template:
+          type: object
+          description: For LIST type, the schema of an item
+          additionalProperties:
+            $ref: '#/components/schemas/LayerInfo'
+    
+    FormSchema:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormField'
+
+    FormField:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+          enum: [text, image, list]
+        defaultValue:
+          type: string
+          nullable: true
+        validation:
+          type: object
+          properties:
+            required:
+              type: boolean
+            maxLength:
+              type: integer
+        itemSchema:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormField'
+          description: For list type, the schema of fields in each item

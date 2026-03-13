@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADB Component Management Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ADB Component Management</h1>
+            <div id="status-indicator" class="status-disconnected">Disconnected</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="psd-loader">
+            <div class="card">
+                <h2>Load PSD Component</h2>
+                <div class="input-group">
+                    <input type="text" id="psd-path" placeholder="C:\path\to\your\component.psd" />
+                    <button id="btn-parse">Parse PSD</button>
+                </div>
+                <div id="parse-status"></div>
+            </div>
+        </section>
+
+        <section id="form-container" class="hidden">
+            <div class="card">
+                <h2 id="component-name">Component Form</h2>
+                <form id="dynamic-form">
+                    <!-- Dynamic fields will be rendered here -->
+                    <div id="form-fields"></div>
+                    
+                    <div class="form-actions">
+                        <button type="button" id="btn-preview" class="secondary">Preview in Photoshop</button>
+                        <button type="submit" id="btn-apply" class="primary">Apply Changes</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mike Chambers. ADB MCP Project.</p>
+        </div>
+    </footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/form-generator.js"></script>
+</body>
+</html>

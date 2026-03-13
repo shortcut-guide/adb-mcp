@@ -25,8 +25,15 @@
 
 const express = require("express");
 const http = require("http");
+const path = require("path");
 const { Server } = require("socket.io");
 const app = express();
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
+
+const componentsApi = require('./api/components');
+app.use('/api/components', componentsApi);
+
 const server = http.createServer(app);
 const io = new Server(server, {
     transports: ["websocket", "polling"],
