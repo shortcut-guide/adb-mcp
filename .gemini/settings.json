@@ -6,5 +6,34 @@
         "C:/Users/user/Dropbox/PC/Documents/dev/adb-mcp/mcp/ps-mcp.py"
       ]
     }
+  },
+  "experimental": {
+    "enableAgents": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .gemini/hooks/gsd-check-update.js"
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .gemini/hooks/gsd-context-monitor.js"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node .gemini/hooks/gsd-statusline.js"
   }
 }
